@@ -1,3 +1,0 @@
-cohesion_templates.local_tasks:
-  deriver: 'Drupal\cohesion_templates\Plugin\Derivative\CohesionContentTemplateLocalTasks'
-  weight: 100

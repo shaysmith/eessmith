@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional Services Request Form</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F5F5F5;
+            color: #333333;
+        }
+    </style>
+</head>
+<body class="antialiased">
+    
+    <section id="proserve-form-section" class="py-12">
+        <div class="container mx-auto px-4">
+             <div class="max-w-4xl mx-auto bg-white rounded-lg shadow-xl p-8 border border-gray-200">
+                <h3 class="text-2xl font-bold mb-2">Submit a Professional Services Request</h3>
+                <p class="text-gray-600 mb-6">Please provide the details for your service request below.</p>
+
+                <div class="space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="environment" class="block text-sm font-medium text-gray-700">1. Environment/Instance</label>
+                            <select id="environment" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
+                                <option>Select an environment...</option>
+                                <option>My Environment 1</option>
+                                <option>My Environment 2</option>
+                                <option>My Instance 1</option>
+                                <option>My Instance 2</option>
+                            </select>
+                        </div>
+                        <div>
+                             <label for="impact" class="block text-sm font-medium text-gray-700">2. Business Impact</label>
+                             <select id="impact" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
+                                 <option>Select impact level...</option>
+                                 <option>Low - General guidance required</option>
+                                 <option>Medium - Minor functionality Impaired</option>
+                                 <option>High - Key functionality impaired</option>
+                             </select>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="assistance-type" class="block text-sm font-medium text-gray-700">3. Assistance needed with</label>
+                        <select id="assistance-type" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
+                            <option>Select a service...</option>
+                            <option>Edge Management Assistance: Caching/Firewall Adjustment</option>
+                            <option>Edge Management Assistance: Report Request</option>
+                            <option>Edge Management Assistance: Incident Report</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label for="description" class="block text-sm font-medium text-gray-700">4. Description</label>
+                        <textarea id="description" rows="6" placeholder="Please provide a detailed description of your request. Include specific requirements, URLs, or any other context that will help our team assist you." class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"></textarea>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">5. Attachments</label>
+                        <div class="mt-2 flex justify-center rounded-md border-2 border-dashed border-gray-300 px-6 pt-5 pb-6">
+                            <div class="text-center">
+                                <div class="text-4xl">📎</div>
+                                <p class="mt-2 text-sm text-gray-600">Drag & drop files or <button type="button" class="font-medium text-blue-600 hover:text-blue-500">browse</button></p>
+                                <p class="text-xs text-gray-500">PDF, PNG, JPG, ZIP up to 10MB</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-end pt-4">
+                        <button type="button" class="inline-flex items-center rounded-md border border-transparent bg-blue-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">Submit Professional Services Request</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="text-center mt-8 mb-12">
+        <p class="text-gray-500">Our Professional Services team will review your request and be in touch shortly.</p>
+    </footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    // This script block is kept for potential future interactivity.
+});
+</script>
+</body>
+</html>

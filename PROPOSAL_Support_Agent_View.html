@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agent Case View - #0045981</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+            color: #1f2937;
+        }
+        .status-item.active {
+            border-bottom-width: 4px;
+        }
+        .pending-dropdown {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            z-index: 10;
+        }
+        .status-item:hover .pending-dropdown {
+            display: block;
+        }
+        .main-tab-btn.active {
+            border-color: #3b82f6;
+            color: #3b82f6;
+        }
+        .main-tab-content:not(.active) {
+            display: none;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div class="container mx-auto p-4 md:p-6 lg:p-8">
+        
+        <!-- TOP FULL-WIDTH SECTION -->
+        <header class="mb-6">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center">
+                <div>
+                    <h1 class="text-3xl font-bold text-gray-800">Case #0045981</h1>
+                    <p class="text-gray-500 text-lg">Invoice #INV-2025-08B Missing from Portal</p>
+                </div>
+                <button id="escalate-btn" class="mt-4 md:mt-0 bg-red-600 text-white font-semibold py-2 px-5 rounded-lg shadow-sm hover:bg-red-700 transition">
+                    Escalate
+                </button>
+            </div>
+            <div class="mt-4 bg-white rounded-lg shadow-md border border-gray-200 flex justify-between items-center p-2">
+                <nav id="status-bar" class="flex-grow">
+                    <ul class="flex justify-around items-center text-center font-semibold text-gray-600">
+                        <li class="flex-1 status-item" data-status="new"><a href="#" class="block p-3 rounded-md">New</a></li>
+                        <li class="flex-1 status-item active" data-status="working"><a href="#" class="block p-3 rounded-md">Working</a></li>
+                        <li class="flex-1 status-item relative" data-status="pending">
+                            <a href="#" id="pending-main-link" class="block p-3 rounded-md">Pending</a>
+                            <div class="pending-dropdown w-full mt-1 bg-white shadow-lg rounded-md border text-left">
+                                <a href="#" class="block px-4 py-2 text-sm hover:bg-gray-100 pending-sub-item" data-sub-text="Pending: Customer Response">Pending: Customer Response</a>
+                                <a href="#" class="block px-4 py-2 text-sm hover:bg-gray-100 pending-sub-item" data-sub-text="Pending: Product Response">Pending: Product Response</a>
+                                <a href="#" class="block px-4 py-2 text-sm hover:bg-gray-100 pending-sub-item" data-sub-text="Pending: Partner Response">Pending: Partner Response</a>
+                            </div>
+                        </li>
+                        <li class="flex-1 status-item" data-status="resolved"><a href="#" class="block p-3 rounded-md">Resolved</a></li>
+                        <li class="flex-1 status-item" data-status="closed"><a href="#" class="block p-3 rounded-md">Closed</a></li>
+                    </ul>
+                </nav>
+                <button class="ml-4 bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg shadow-sm hover:bg-blue-700 transition whitespace-nowrap">Update Status</button>
+            </div>
+        </header>
+
+        <!-- MAIN TWO-COLUMN LAYOUT -->
+        <div class="flex flex-col lg:flex-row gap-6">
+
+            <!-- COLUMN 1 (LEFT, 75%) -->
+            <main class="w-full lg:w-3/4">
+                
+                <div class="bg-white rounded-lg shadow-md border border-gray-200">
+                    <!-- Main Content Tabs -->
+                    <div id="main-tabs-nav" class="border-b border-gray-200">
+                        <nav class="-mb-px flex space-x-6 px-6" aria-label="Tabs">
+                            <button class="main-tab-btn active whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm" data-tab="case-tab">Case</button>
+                            <button class="main-tab-btn whitespace-nowrap py-4 px-1 border-b-2 border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 font-medium text-sm" data-tab="fields-tab">Fields</button>
+                            <button class="main-tab-btn whitespace-nowrap py-4 px-1 border-b-2 border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 font-medium text-sm" data-tab="related-tab">Related</button>
+                            <button class="main-tab-btn whitespace-nowrap py-4 px-1 border-b-2 border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 font-medium text-sm" data-tab="swarm-tab">Swarm</button>
+                             <button class="main-tab-btn whitespace-nowrap py-4 px-1 border-b-2 border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 font-medium text-sm" data-tab="log-task-tab">Log Support Task</button>
+                            <button class="main-tab-btn whitespace-nowrap py-4 px-1 border-b-2 border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 font-medium text-sm" data-tab="autopanic-tab">Autopanic</button>
+                        </nav>
+                    </div>
+
+                    <div id="main-tabs-content">
+                        <!-- Case Tab Content -->
+                        <div id="case-tab" class="main-tab-content active p-6 space-y-6">
+<div class=""><h3 class="text-xl font-bold mb-3 border-b pb-2">SLA Tracker</h3><div><div><div class="flex justify-between items-center font-semibold text-gray-600"><span>Time to First Response</span><span class="font-bold text-green-600">✓ Met</span></div><div class="w-full bg-gray-200 rounded-full h-2.5 mt-1"><div class="bg-green-600 h-2.5 rounded-full" style="width: 100%"></div></div></div></div></div>
+                            <div class=""><h2 class="text-xl font-bold border-b pb-2 flex justify-between items-center"><span>Case Details</span><button id="toggle-casedetails-btn" class="text-gray-500 hover:text-blue-600" title="Toggle Details"><svg id="casedetails-chevron" class="w-6 h-6 transition-transform rotate-180" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" /></svg></button></h2>
+                                <div id="casedetails-body" class="pt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-4 text-sm">
+                                    <div><label class="font-semibold text-gray-500 block">Customer</label><span>Example Corp Inc.</span></div>
+                                    <div><label class="font-semibold text-gray-500 block">Contact</label><span class="text-blue-600">jane.doe@examplecorp.com</span></div>
+                                    <div><label class="font-semibold text-gray-500 block">Case Owner</label><div class="flex items-center"><span>Sarah Adams</span><a href="#" title="Change Owner" class="ml-2 text-gray-400 hover:text-blue-600">✏️</a></div></div>
+                                    <div><label class="font-semibold text-gray-500 block">Environment/Instance</label><a href="#" class="text-blue-600 hover:underline">My Instance 2</a></div>
+                                    <div><label class="font-semibold text-gray-500 block">Contact Phone</label><span>+1 (555) 123-4567</span></div>
+                                    <div><label class="font-semibold text-gray-500 block">Date Opened</label><span>2025-09-24 10:45 AM</span></div>
+                                    <div><label for="affected-product" class="font-semibold text-gray-500 block mb-1">Affected Product or Service</label><select id="affected-product" class="w-full rounded-md border-gray-300 shadow-sm text-sm focus:border-blue-500 focus:ring-blue-500">								<option>CDP</option>
+								<option>Cloud Platform</option>
+								<option>Code Studio</option>
+								<option>Content Optimization (SEO)</option>
+								<option>Conversion Optimization</option>
+								<option>DAM</option>
+								<option>Edge</option>
+								<option>Front-end Hosting</option>
+								<option>Launchpad</option>
+								<option>MEO</option>
+								<option>Search</option>
+								<option>Site Factory</option>
+								<option>Source</option>
+								<option>Web Governance</option></select></div>
+                                    <div><label for="root-cause" class="font-semibold text-gray-500 block mb-1">Root Cause</label><select id="root-cause" class="w-full rounded-md border-gray-300 shadow-sm text-sm focus:border-blue-500 focus:ring-blue-500"><option>Root Cause 1</option><option>Root Cause 2</option><option>Root Cause 3</option></select></div>
+                                    <div><label for="waiting-for" class="font-semibold text-gray-500 block mb-1">Waiting For</label><select id="waiting-for" class="w-full rounded-md border-gray-300 shadow-sm text-sm focus:border-blue-500 focus:ring-blue-500"><option>Accounting</option><option>Cloudflare</option><option>TAM</option></select></div>
+                                </div>
+                            </div>
+                            <div class=""><h2 class="text-xl font-bold border-b pb-2 flex justify-between items-center"><span>Original Case Description</span><button id="toggle-description-btn" class="text-gray-500 hover:text-blue-600" title="Toggle Description"><svg id="description-chevron" class="w-6 h-6 transition-transform" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" /></svg></button></h2><div id="description-body" class="hidden pt-4"><div class="h-40 min-h-[10rem] max-h-80 resize-y overflow-y-auto bg-gray-50 p-4 border rounded-md text-sm text-gray-800 space-y-4"><p>Hello, I am unable to locate our most recent invoice, INV-2025-08B, in our billing portal. It was due last week and I need to process it for payment. The portal shows all our previous invoices up to July, but the August one appears to be missing entirely. This is holding up our end-of-quarter accounting.</p><p>I've tried logging out and back in, and I also cleared my browser cache as suggested by your help documentation, but the invoice still isn't visible. I also checked with our primary account holder, John Smith, and he is unable to see it either. We need to get this paid as soon as possible to avoid any late fees or service interruptions.</p><p>Could you please investigate why the invoice is not appearing in the portal? Ideally, if you could make it available for download that would be the fastest solution. If not, please provide a PDF copy via email. Thank you for your help.</p></div></div></div>
+                            <div class=""><h2 class="text-xl font-bold mb-4 border-b pb-2">Response</h2><div class="mb-4"><div class="flex items-center space-x-4 border-b mb-4 pb-2"><label class="flex items-center cursor-pointer"><input type="radio" name="responseType" class="form-radio" value="public" checked><span class="ml-2 font-semibold text-blue-600">Public Reply</span></label><label class="flex items-center cursor-pointer"><input type="radio" name="responseType" class="form-radio" value="internal"><span class="ml-2 font-semibold text-amber-600">Internal Note</span></label></div><div id="public-reply-container"><div class="ml-4 pl-4 border-l-2 border-gray-200"><div class="bg-gray-50 p-3 rounded-t-lg border border-b-0 border-gray-200 text-sm space-y-1"><div class="flex items-center"><span class="font-semibold text-gray-500 w-12">FROM:</span><span class="text-gray-800">support@acquia.com</span></div><div class="flex items-center"><span class="font-semibold text-gray-500 w-12">TO:</span><span class="text-gray-800">jane.doe@examplecorp.com</span></div><div class="flex items-center"><span class="font-semibold text-gray-500 w-12">CC:</span><span class="text-gray-800">billing@examplecorp.com, jsmith@examplecorp.com</span></div></div><div class="wysiwyg-toolbar border border-b-0 border-gray-300 bg-gray-50 p-1 flex items-center space-x-2"><button class="wysiwyg-btn p-1 hover:bg-gray-200 rounded" data-format="bold"><b>B</b></button><button class="wysiwyg-btn p-1 hover:bg-gray-200 rounded" data-format="italic"><i>I</i></button><button class="wysiwyg-btn p-1 hover:bg-gray-200 rounded" data-format="link">🔗</button><button class="wysiwyg-btn p-1 hover:bg-gray-200 rounded font-mono text-xs" data-format="code">&lt;/&gt;</button></div><textarea id="public-reply-text" rows="5" placeholder="Add a public comment to the customer..." class="w-full p-2 border border-gray-300 rounded-b-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"></textarea></div></div><div id="internal-note-container" class="hidden"><div class="wysiwyg-toolbar border border-b-0 border-gray-300 bg-gray-50 p-1 flex items-center space-x-2 rounded-t-lg"><button class="wysiwyg-btn p-1 hover:bg-gray-200 rounded" data-format="bold"><b>B</b></button><button class="wysiwyg-btn p-1 hover:bg-gray-200 rounded" data-format="italic"><i>I</i></button><button class="wysiwyg-btn p-1 hover:bg-gray-200 rounded" data-format="link">🔗</button><button class="wysiwyg-btn p-1 hover:bg-gray-200 rounded font-mono text-xs" data-format="code">&lt;/&gt;</button></div><textarea id="internal-note-text" rows="5" placeholder="Add an internal note (visible only to agents)..." class="w-full p-2 border border-gray-300 rounded-b-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500"></textarea></div><div class="flex justify-end mt-2"><button id="post-btn" class="bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg shadow-sm hover:bg-blue-700 transition">Post Comment</button></div></div><div class="space-y-6 border-t pt-6"><div class="flex gap-4"><div class="flex-shrink-0 w-10 h-10 rounded-full bg-amber-100 text-amber-600 flex items-center justify-center font-bold">SA</div><div><div class="flex items-center space-x-2"><h4 class="font-bold">Sarah Adams</h4><span class="text-xs font-semibold bg-yellow-100 text-yellow-800 px-2 py-0.5 rounded-full">Internal</span><p class="text-xs text-gray-500">2025-09-24 10:52 AM</p></div><p class="mt-1 text-gray-700 text-sm">Checked the billing system. Invoice #INV-2025-08B was generated but failed to sync to the customer portal. Manually pushing it now.</p></div></div><div class="flex gap-4"><div class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold">SA</div><div><div class="flex items-baseline space-x-2"><h4 class="font-bold">Sarah Adams</h4><span class="text-xs font-semibold bg-blue-100 text-blue-800 px-2 py-0.5 rounded-full">Public</span><p class="text-xs text-gray-500">2025-09-24 10:51 AM</p></div><p class="mt-1 text-gray-700 text-sm">Hi Jane, thank you for reaching out. I am looking into the status of this invoice now and will provide an update shortly.</p></div></div><div class="flex gap-4"><div class="flex-shrink-0 w-10 h-10 rounded-full bg-gray-200 text-gray-700 flex items-center justify-center font-bold">JD</div><div><div class="flex items-baseline space-x-2"><h4 class="font-bold">Jane Doe</h4><span class="text-xs font-semibold bg-gray-200 text-gray-800 px-2 py-0.5 rounded-full">Customer</span><p class="text-xs text-gray-500">2025-09-24 10:45 AM</p></div><p class="mt-1 text-gray-700 text-sm">Hello, I am unable to locate our most recent invoice, INV-2025-08B, in our billing portal. It was due last week and I need to process it for payment. Can you please provide a copy or make it available for download? Thank you.</p></div></div></div></div>
+                        </div>
+                        <!-- Fields Tab Content -->
+                        <div id="fields-tab" class="main-tab-content p-6 space-y-6">
+                            <!-- Case Information -->
+                            <div class="collapsible-section"><h2 class="text-xl font-bold border-b pb-2 flex justify-between items-center cursor-pointer"><span>Case Information</span><svg class="w-6 h-6 transition-transform chevron" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" /></svg></h2><div class="collapsible-content hidden pt-4 grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4 text-sm"><div><label class="font-semibold text-gray-500 block">Case Number</label><input type="text" class="w-full rounded-md border-gray-300 shadow-sm text-sm" value="0045981"></div><div><label class="font-semibold text-gray-500 block">Support Level</label><input type="text" class="w-full rounded-md border-gray-300 shadow-sm text-sm" value="Premium"></div><div><label class="font-semibold text-gray-500 block">Support Entitlement Name</label><input type="text" class="w-full rounded-md border-gray-300 shadow-sm text-sm" value="Acme Corp Premium Support"></div><div><label class="font-semibold text-gray-500 block">Case Record Type</label><input type="text" class="w-full rounded-md border-gray-300 shadow-sm text-sm" value="Customer Support"></div><div><label class="font-semibold text-gray-500 block">Case Origin</label><input type="text" class="w-full rounded-md border-gray-300 shadow-sm text-sm" value="Web"></div><div><label class="font-semibold text-gray-500 block">Request Category</label><input type="text" class="w-full rounded-md border-gray-300 shadow-sm text-sm" value="General"></div><div><label class="font-semibold text-gray-500 block">Support Service Region</label><input type="text" class="w-full rounded-md border-gray-300 shadow-sm text-sm" value="NA East"></div><div><label class="font-semibold text-gray-500 block">Subscription Tier</label><input type="text" class="w-full rounded-md border-gray-300 shadow-sm text-sm" value="Enterprise"></div><div class="md:col-span-2"><label class="font-semibold text-gray-500 block">Resolution Summary</label><textarea class="w-full rounded-md border-gray-300 shadow-sm text-sm">Invoice INV-2025-08B was manually synchronized with the customer portal. Customer was notified.</textarea></div><div class="md:col-span-2"><label class="font-semibold text-gray-500 block">Customer Support Community URL</label><input type="text" class="w-full rounded-md border-gray-300 shadow-sm text-sm" value="https://community.acquia.com/s/case/5003p00002A1B2C"></div><div class="md:col-span-2"><label class="font-semibold text-gray-500 block">Light Agent Community URL</label><input type="text" class="w-full rounded-md border-gray-300 shadow-sm text-sm" value="https://acquia.lightning.force.com/lightning/r/Case/5003p00002A1B2C/view"></div></div></div>
+                            <!-- Crit Details -->
+                            <div class="collapsible-section"><h2 class="text-xl font-bold border-b pb-2 flex justify-between items-center cursor-pointer"><span>Crit Details</span><svg class="w-6 h-6 transition-transform chevron" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" /></svg></h2><div class="collapsible-content hidden pt-4 grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4 text-sm"><div><label class="font-semibold text-gray-500 block">Emergency Contact for this Case</label><span>Jane Doe</span></div><div><label class="font-semibold text-gray-500 block">Emergency Contact Phone</label><span>+1 (555) 123-4567</span></div></div></div>
+                            <!-- Entitlement Details -->
+                            <div class="collapsible-section"><h2 class="text-xl font-bold border-b pb-2 flex justify-between items-center cursor-pointer"><span>Entitlement Details</span><svg class="w-6 h-6 transition-transform chevron" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" /></svg></h2><div class="collapsible-content hidden pt-4 grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4 text-sm"><div><label class="font-semibold text-gray-500 block">Priority Score</label><span>75</span></div><div><label class="font-semibold text-gray-500 block">Milestone Status</label><span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-green-100 text-green-800">Met</span></div><div><label class="font-semibold text-gray-500 block">Milestone Target Date</label><span>2025-09-24 14:45 PM UTC</span></div><div><label class="font-semibold text-gray-500 block">SLA Policy Start Time</label><span>2025-09-24 10:45 AM UTC</span></div><div><label class="font-semibold text-gray-500 block">SLA Policy End Time</label><span>--</span></div><div><label class="font-semibold text-gray-500 block">Stopped</label><span>No</span></div><div><label class="font-semibold text-gray-500 block">Stopped Since</label><span>--</span></div></div></div>
+                            <!-- Date Details -->
+                            <div class="collapsible-section"><h2 class="text-xl font-bold border-b pb-2 flex justify-between items-center cursor-pointer"><span>Date Details</span><svg class="w-6 h-6 transition-transform chevron" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" /></svg></h2><div class="collapsible-content hidden pt-4 text-sm"><div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4"><div><label class="font-semibold text-gray-500 block">Assigned Date</label><span>2025-09-24 10:46 AM</span></div><div><label class="font-semibold text-gray-500 block">Email Send Date/Time</label><span>2025-09-24 10:51 AM</span></div><div><label class="font-semibold text-gray-500 block">First Assigned Date</label><span>2025-09-24 10:46 AM</span></div><div><label class="font-semibold text-gray-500 block">First Resolved Date</label><span>--</span></div><div><label class="font-semibold text-gray-500 block">Last Communication Date</label><span>2025-09-24 10:51 AM</span></div><div><label class="font-semibold text-gray-500 block">Last Modified By</label><span>Sarah Adams</span></div><div><label class="font-semibold text-gray-500 block">Last Owner Communication Date</label><span>2025-09-24 10:51 AM</span></div><div><label class="font-semibold text-gray-500 block">Sharing Last Synced</label><span>2025-09-24 11:00 AM</span></div></div><div class="mt-4 pt-4 border-t"><h4 class="font-bold text-gray-700 mb-2">PENDING DATES</h4><div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4"><div><label class="font-semibold text-gray-500 block">Status Updated to Pending</label><span>--</span></div><div><label class="font-semibold text-gray-500 block">Hour Pending Notification Sent 48</label><span>--</span></div><div><label class="font-semibold text-gray-500 block">Hour Pending Notification Sent 144</label><span>--</span></div><div><label class="font-semibold text-gray-500 block">Hour Pending Notification Sent 192</label><span>--</span></div></div></div><div class="mt-4 pt-4 border-t"><h4 class="font-bold text-gray-700 mb-2">RESOLVED DATES</h4><div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4"><div><label class="font-semibold text-gray-500 block">Resolved Date</label><span>--</span></div><div><label class="font-semibold text-gray-500 block">Auto-Resolved (Y/N)</label><span>N</span></div><div><label class="font-semibold text-gray-500 block">Resolved By</label><span>--</span></div></div></div></div></div>
+                        </div>
+                        <div id="related-tab" class="main-tab-content p-6">
+                            <div class="space-y-6">
+                                <div>
+                                    <h2 class="text-xl font-bold mb-4">Escalations</h2>
+                                    <div class="space-y-3">
+                                        <div class="p-4 bg-gray-50 rounded-lg border">
+                                            <div class="flex justify-between items-center">
+                                                <a href="./escalations/ESC-002.html" class="font-semibold text-blue-600 hover:underline">ESC-002</a>
+                                                <span class="text-xs font-bold text-red-600">ACTIVE</span>
+                                            </div>
+                                            <div class="text-sm text-gray-600 mt-1">
+                                                <p><strong>Start Date:</strong> 2025-09-26</p>
+                                            </div>
+                                        </div>
+                                        <div class="p-4 bg-gray-50 rounded-lg border">
+                                            <div class="flex justify-between items-center">
+                                                <a href="./escalations/ESC-001.html" class="font-semibold text-blue-600 hover:underline">ESC-001</a>
+                                                <span class="text-xs font-bold text-gray-500">CLOSED</span>
+                                            </div>
+                                            <div class="text-sm text-gray-600 mt-1">
+                                                <p><strong>Start Date:</strong> 2025-07-15</p>
+                                                <p><strong>End Date:</strong> 2025-07-18</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="border-t pt-6">
+                                    <h2 class="text-xl font-bold mb-4">Survey Responses</h2>
+                                    <div class="p-4 bg-gray-50 rounded-lg border">
+                                        <div class="flex justify-between items-center">
+                                            <a href="./surveys/SVY-001.html" class="font-semibold text-blue-600 hover:underline">SVY-001</a>
+                                        </div>
+                                        <div class="text-sm text-gray-600 mt-1">
+                                            <p><strong>Responded Date:</strong> 2025-09-28</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="border-t pt-6">
+                                    <h2 class="text-xl font-bold mb-4">Case History</h2>
+                                    <div class="border rounded-lg overflow-hidden">
+                                        <div class="p-3 flex justify-between items-center border-b bg-gray-50">
+                                            <p class="text-sm text-gray-500">12 items • Sorted by Date</p>
+                                        </div>
+                                        <div class="overflow-x-auto">
+                                            <table class="w-full text-sm">
+                                                <thead class="bg-gray-50 text-left text-gray-600">
+                                                    <tr>
+                                                        <th class="p-3 font-semibold">Date</th>
+                                                        <th class="p-3 font-semibold">Field</th>
+                                                        <th class="p-3 font-semibold">User</th>
+                                                        <th class="p-3 font-semibold">Original Value</th>
+                                                        <th class="p-3 font-semibold">New Value</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody class="divide-y">
+                                                    <tr class="hover:bg-gray-50">
+                                                        <td class="p-3 whitespace-nowrap">10/9/2025, 10:06 AM</td>
+                                                        <td class="p-3">Case Owner</td>
+                                                        <td class="p-3 text-blue-600">Jane Doe</td>
+                                                        <td class="p-3">Sarah Adams</td>
+                                                        <td class="p-3">Jane Doe</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="border-t pt-6">
+                                    <h2 class="text-xl font-bold mb-4">Messaging Sessions</h2>
+                                    <div class="border rounded-lg overflow-hidden">
+                                        <div class="p-3 flex justify-between items-center border-b bg-gray-50">
+                                            <p class="text-sm text-gray-500">12 items • Sorted by Date</p>
+                                        </div>
+                                        <div class="overflow-x-auto">
+                                            <table class="w-full text-sm">
+                                                <thead class="bg-gray-50 text-left text-gray-600">
+                                                    <tr>
+                                                        <th class="p-3 font-semibold">Messaging Session Name</th>
+                                                        <th class="p-3 font-semibold">Messaging User</th>
+                                                        <th class="p-3 font-semibold">Session Owner</th>
+                                                        <th class="p-3 font-semibold">Start Time</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody class="divide-y">
+                                                    <tr class="hover:bg-gray-50">
+                                                        <td class="p-3 whitespace-nowrap"><a href="#" class="font-semibold text-blue-600 hover:underline">MS-00001111</a></td>
+                                                        <td class="p-3">Jane Doe</td>
+                                                        <td class="p-3 text-blue-600">Sarah Adams</td>
+                                                        <td class="p-3">10/9/2025, 10:06 AM</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="border-t pt-6">
+                                    <h2 class="text-xl font-bold mb-4 flex justify-between items-center"><span>Case Team</span></h2>
+                                    <div class="border rounded-lg overflow-hidden">
+                                        <div class="overflow-x-auto">
+                                            <table class="w-full text-sm">
+                                                <thead class="bg-gray-50 text-left text-gray-600">
+                                                    <tr>
+                                                        <th class="p-3 font-semibold">Case Team Member</th>
+                                                        <th class="p-3 font-semibold">Case Team Member Role</th>
+                                                        <th class="p-3 font-semibold">Case Access</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody class="divide-y">
+                                                    <tr class="hover:bg-gray-50">
+                                                        <td class="p-3 text-blue-600 font-semibold">Jane Doe</td>
+                                                        <td class="p-3">View Only</td>
+                                                        <td class="p-3">Read/Write</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="border-t pt-6">
+                                    <h2 class="text-xl font-bold mb-4 flex justify-between items-center"><span>Open Activities</span></h2>
+                                    <div class="border rounded-lg overflow-hidden">
+                                        <div class="overflow-x-auto">
+                                            <table class="w-full text-sm">
+                                                <thead class="bg-gray-50 text-left text-gray-600">
+                                                    <tr>
+                                                        <th class="p-3 font-semibold">Subject</th>
+                                                        <th class="p-3 font-semibold">Due Date</th>
+                                                        <th class="p-3 font-semibold">Status</th>
+                                                        <th class="p-3 font-semibold">Assigned To</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody class="divide-y">
+                                                    <tr class="hover:bg-gray-50">
+                                                        <td class="p-3"><a href="#" class="font-semibold text-blue-600 hover:underline">Follow up with customer</a></td>
+                                                        <td class="p-3 whitespace-nowrap">10/20/2025</td>
+                                                        <td class="p-3">Not Started</td>
+                                                        <td class="p-3 text-blue-600">Sarah Adams</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- NEWLY ADDED LEGACY RECORDS SECTION -->
+                                <div class="border-t pt-6">
+                                    <h2 class="text-xl font-bold mb-4">Legacy Records</h2>
+                                    <div class="border rounded-lg overflow-hidden">
+                                        <div class="overflow-x-auto">
+                                            <table class="w-full text-sm">
+                                                <thead class="bg-gray-50 text-left text-gray-600">
+                                                    <tr>
+                                                        <th class="p-3 font-semibold">Legacy Record ID</th>
+                                                        <th class="p-3 font-semibold">Legacy Title</th>
+                                                        <th class="p-3 font-semibold">Legacy Owner</th>
+                                                        <th class="p-3 font-semibold">Last Modified Date (In Service Cloud)</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody class="divide-y">
+                                                    <tr class="hover:bg-gray-50">
+                                                        <td class="p-3"><a href="legacy/LEG-00123.html" class="font-semibold text-blue-600 hover:underline">LEG-00123</a></td>
+                                                        <td class="p-3">Invoice Discrepancy Case from Old System</td>
+                                                        <td class="p-3">Jane Doe</td>
+                                                        <td class="p-3 whitespace-nowrap">2024-05-15</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="swarm-tab" class="main-tab-content p-6">
+                             <!-- REORDERED SWARM CONTENT -->
+                             <div class="space-y-6">
+                                 <!-- 1. Actions & Recommendations -->
+                                <div class="border-t pt-6">
+                                    <h2 class="text-xl font-bold mb-4">Actions & Recommendations</h2>
+                                    <div class="border-b"><div class="flex space-x-4"><button class="pb-2 border-b-2 border-blue-500 text-blue-600 font-semibold">Actions</button><button class="pb-2 text-gray-500">History</button></div></div>
+                                    <div class="space-y-3 mt-4">
+                                        <button class="w-full text-white bg-blue-600 font-semibold p-2 rounded-md hover:bg-blue-700">Add</button>
+                                        <select class="w-full rounded-md border-gray-300 shadow-sm"><option>Screen Flow: Add Member to Swarm</option></select>
+                                        <select class="w-full rounded-md border-gray-300 shadow-sm"><option>Screen Flow: Reopen Swarm</option></select>
+                                        <select class="w-full rounded-md border-gray-300 shadow-sm"><option>Screen Flow: Finish Swarming</option></select>
+                                    </div>
+                                     <div class="text-center mt-8 space-y-4">
+                                        <div>
+                                            <h3 class="font-semibold">Submit for Swarm</h3>
+                                            <p class="text-sm text-gray-500">You are not collaborating on this ticket</p>
+                                            <button class="mt-2 text-white bg-blue-600 font-semibold py-2 px-6 rounded-md hover:bg-blue-700">Join</button>
+                                        </div>
+                                        <button class="text-white bg-blue-600 font-semibold py-2 px-6 rounded-md hover:bg-blue-700">Take ownership of this Case</button>
+                                    </div>
+                                </div>
+                                <!-- 2. Swarms -->
+                                <div>
+                                    <h2 class="text-xl font-bold mb-4 flex justify-between items-center"><span>Swarms (1)</span><button class="text-sm font-semibold bg-white text-gray-700 px-3 py-1 rounded-md border shadow-sm hover:bg-gray-50">New</button></h2>
+                                    <div class="border rounded-lg overflow-hidden">
+                                        <div class="overflow-x-auto">
+                                            <table class="w-full text-sm">
+                                                <thead class="bg-gray-50 text-left text-gray-600">
+                                                    <tr>
+                                                        <th class="p-3 font-semibold">Swarm Name</th>
+                                                        <th class="p-3 font-semibold">Swarm Owner</th>
+                                                        <th class="p-3 font-semibold">Status</th>
+                                                        <th class="p-3 font-semibold">Swarm Collaboration...</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody class="divide-y">
+                                                    <tr class="hover:bg-gray-50">
+                                                        <td class="p-3"><a href="#" class="font-semibold text-blue-600 hover:underline">Swarm For Case #01...</a></td>
+                                                        <td class="p-3 text-blue-600">Reese Cotrill</td>
+                                                        <td class="p-3">In Progress</td>
+                                                        <td class="p-3"><a href="#" class="text-blue-600 hover:underline">https://app.slack.co...</a></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="p-2 text-center text-sm bg-gray-50 border-t">
+                                            <a href="#" class="text-blue-600 font-semibold hover:underline">View All</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- 3. Swarm Members -->
+                                <div class="border-t pt-6">
+                                    <h2 class="text-xl font-bold mb-4 flex justify-between items-center"><span>Swarm Members (0)</span><button class="text-sm font-semibold bg-white text-gray-700 px-3 py-1 rounded-md border shadow-sm hover:bg-gray-50">New</button></h2>
+                                    <p class="text-sm text-gray-500 text-center py-4">No members to display.</p>
+                                </div>
+                            </div>
+                        </div>
+                         <div id="log-task-tab" class="main-tab-content p-6">
+                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                  <div class="space-y-6">
+                                      <div><label for="task-subject" class="block text-sm font-medium text-gray-700">Subject <span class="text-red-500">*</span></label><input type="text" id="task-subject" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"></div>
+                                      <div><label for="task-status" class="block text-sm font-medium text-gray-700">Status <span class="text-red-500">*</span></label><select id="task-status" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"><option>Open</option><option>In Progress</option><option>Completed</option></select></div>
+                                       <div><label for="task-comments" class="block text-sm font-medium text-gray-700">Comments</label><p class="text-xs text-gray-500">Tip: Type Command + period to insert quick text.</p><textarea id="task-comments" rows="5" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"></textarea></div>
+                                  </div>
+                                  <div class="space-y-6">
+                                      <div><label for="task-due-date" class="block text-sm font-medium text-gray-700">Due Date</label><input type="date" id="task-due-date" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"></div>
+                                      <div><label for="task-priority" class="block text-sm font-medium text-gray-700">Priority <span class="text-red-500">*</span></label><select id="task-priority" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"><option>Normal</option><option>Low</option><option>High</option></select></div>
+                                       <div><label for="task-assigned-to" class="block text-sm font-medium text-gray-700">Assigned To <span class="text-red-500">*</span></label><div class="mt-1 flex items-center bg-blue-100 border border-blue-200 rounded-md p-2 w-max"><span class="text-blue-700 font-semibold">Shay Smith</span><button class="ml-2 text-blue-700">×</button></div></div>
+                                       <div><label for="task-name" class="block text-sm font-medium text-gray-700">Name</label><input type="text" id="task-name" placeholder="Search Contacts..." class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"></div>
+                                        <div><label for="task-related-to" class="block text-sm font-medium text-gray-700">Related To</label><div class="mt-1 flex items-center bg-pink-100 border border-pink-200 rounded-md p-2 w-max"><span class="text-pink-700 font-semibold">01199629</span><button class="ml-2 text-pink-700">×</button></div></div>
+                                       <div><label for="task-type" class="block text-sm font-medium text-gray-700">Task/Event Type</label><select id="task-type" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"><option>--None--</option></select></div>
+                                       <div><label for="task-detail" class="block text-sm font-medium text-gray-700">Detail</label><select id="task-detail" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"><option>--None--</option></select></div>
+                                  </div>
+                              </div>
+                              <div class="flex justify-end mt-6 pt-6 border-t">
+                                  <button class="bg-gray-800 text-white font-semibold py-2 px-4 rounded-lg shadow-sm hover:bg-gray-900 transition">Save</button>
+                              </div>
+                        </div>
+                         <div id="autopanic-tab" class="main-tab-content p-6">
+                               <iframe src="./drutiny_report/sc.ticket500Pb0000078Oh7IAE-autopanic-eessmith.prod.acquia-sites.com-20240121-134821.en.html" class="w-full h-[80vh] border-0"></iframe>
+                         </div>
+                    </div>
+                </div>
+            </main>
+
+            <!-- COLUMN 2 (RIGHT, 25%) -->
+            <aside class="w-full lg:w-1/4 space-y-6">
+                <div id="priority-container" class="bg-white p-6 rounded-lg shadow-md border border-gray-200"><div class="flex justify-between items-center mb-4"><h3 class="text-lg font-bold">Priority</h3><button id="priority-edit-btn" title="Change Priority" class="text-gray-400 hover:text-blue-600">✏️</button></div><div id="priority-display" class="p-3 rounded-lg bg-green-100 text-green-800 font-bold text-center border-2 border-green-300 cursor-pointer">Medium</div><div id="priority-options" class="hidden mt-2 space-y-2"><a href="#" class="priority-choice block p-2 rounded-lg bg-blue-100 text-blue-800 font-bold text-center hover:bg-blue-200" data-priority="Low">Low</a><a href="#" class="priority-choice block p-2 rounded-lg bg-green-100 text-green-800 font-bold text-center hover:bg-green-200" data-priority="Medium">Medium</a><a href="#" class="priority-choice block p-2 rounded-lg bg-yellow-100 text-yellow-800 font-bold text-center hover:bg-yellow-200" data-priority="High">High</a><a href="#" class="priority-choice block p-2 rounded-lg bg-red-100 text-red-800 font-bold text-center hover:bg-red-200" data-priority="Critical">Critical</a></div></div>
+                <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200"><h3 class="text-lg font-bold mb-4">Considerations</h3><div class="grid grid-cols-3 gap-3 text-center"><div class="group relative flex justify-center p-3 bg-gray-100 rounded-md cursor-pointer"><span class="text-3xl">🇺🇸</span><span class="absolute -top-10 left-1/2 -translate-x-1/2 w-max px-2 py-1 bg-gray-800 text-white text-xs rounded-md opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">US Only</span></div><div class="group relative flex justify-center p-3 bg-gray-100 rounded-md cursor-pointer"><span class="text-3xl">🔄️</span><span class="absolute -top-10 left-1/2 -translate-x-1/2 w-max px-2 py-1 bg-gray-800 text-white text-xs rounded-md opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">Upcoming Renewal</span></div><div id="special-notes-container" class="group relative flex justify-center p-3 bg-gray-100 rounded-md cursor-pointer"><span class="text-3xl">📝</span><div id="special-notes-list" class="absolute top-full right-0 w-max bg-white shadow-lg rounded-md border text-left opacity-0 group-hover:opacity-100 pointer-events-none group-hover:pointer-events-auto transition-opacity"><a href="#" class="block px-4 py-2 text-sm hover:bg-gray-100 note-item" data-title="Note 1: Billing Contact" data-content="Primary billing contact is John Smith (jsmith@examplecorp.com), not Jane Doe. Please include him in all billing communications.">Billing Contact Update</a><a href="#" class="block px-4 py-2 text-sm hover:bg-gray-100 note-item" data-title="Note 2: Portal Access" data-content="Customer has previously reported issues with their billing portal access. This may be a recurring problem. Check user permissions if invoice is not visible.">Portal Access History</a></div></div></div></div>
+                <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200"><h3 class="text-lg font-bold mb-3">Attachments</h3><ul class="space-y-2 text-sm"><li class="flex items-center justify-between p-2 bg-gray-50 rounded-md"><span class="font-medium text-gray-700 truncate">portal_screenshot.png</span><a href="#" class="text-blue-600 hover:underline ml-2">View</a></li></ul></div>
+                <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200"><h3 class="text-lg font-bold mb-4 flex justify-between items-center"><span>Jira Issues</span><div class="flex space-x-1"><button class="text-xs font-semibold bg-gray-200 hover:bg-gray-300 px-2 py-1 rounded">Associate</button></div></h3><div class="space-y-2 text-sm"><div class="border-t pt-2"><div class="flex items-center justify-between"><div><span class="mr-2">🐞</span><a href="#" class="font-semibold text-blue-600 hover:underline">BILL-1234</a></div><span class="text-xs text-gray-500">In Progress</span></div></div><div class="border-t pt-2"><div class="flex items-center justify-between"><div><span class="mr-2">💡</span><a href="#" class="font-semibold text-blue-600 hover:underline">UX-567</a></div><span class="text-xs text-gray-500">Backlog</span></div></div><div class="border-t pt-2"><div class="flex items-center justify-between"><div><span class="mr-2">📄</span><a href="#" class="font-semibold text-blue-600 hover:underline">DOC-890</a></div><span class="text-xs text-gray-500">Done</span></div></div></div></div>
+                <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200"><h3 class="text-lg font-bold mb-3">Related Documentation</h3><ul class="space-y-2 text-sm"><li class="p-2 bg-gray-50 rounded-md"><a href="#" class="font-medium text-blue-600 hover:underline">📖 Managing Your Invoices</a></li><li class="p-2 bg-gray-50 rounded-md"><a href="#" class="font-medium text-blue-600 hover:underline">📖 Accessing the Billing Portal</a></li><li class="p-2 bg-gray-50 rounded-md"><a href="#" class="font-medium text-blue-600 hover:underline">📖 Understanding Your Bill</a></li></ul></div>
+            </aside>
+        </div>
+    </div>
+
+    <!-- MODALS -->
+    <div id="escalation-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50 hidden"><div class="bg-white rounded-lg shadow-xl max-w-lg w-full"><div class="p-6 border-b flex justify-between items-center"><h3 class="text-xl font-bold">Escalate Case #0045981</h3><button id="escalation-modal-close" class="text-gray-500 hover:text-gray-800 text-2xl">&times;</button></div><div class="p-6 space-y-4"><div class="flex items-center"><input id="scope-check" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"><label for="scope-check" class="ml-2 block text-sm text-gray-900">Scope check</label></div><div><label for="support-manager" class="block text-sm font-medium text-gray-700">Assigned Support Manager</label><select id="support-manager" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"><option>John Anderson</option><option>Maria Garcia</option></select></div><div><label for="escalation-reason" class="block text-sm font-medium text-gray-700">Escalation Reason</label><select id="escalation-reason" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"><option>--None--</option><option>Client Temperature</option><option>Region Shift</option><option>Initial Response</option><option>Did not like provided answer</option><option>Support Lag</option><option>Product mandated process</option></select></div><div><label for="escalation-details" class="block text-sm font-medium text-gray-700">Escalation Details</label><textarea id="escalation-details" rows="4" placeholder="Provide as much detail as possible as to why this case is being escalated." class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"></textarea></div></div><div class="p-6 bg-gray-50 rounded-b-lg flex justify-end space-x-2"><button class="bg-white text-gray-700 font-semibold py-2 px-4 rounded-lg border border-gray-300 shadow-sm hover:bg-gray-50 transition">De-escalate</button><button class="bg-red-600 text-white font-semibold py-2 px-4 rounded-lg shadow-sm hover:bg-red-700 transition">Submit Escalation</button></div></div></div>
+    <div id="note-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50 hidden"><div class="bg-white rounded-lg shadow-xl max-w-lg w-full"><div class="p-6 border-b flex justify-between items-center"><h3 id="note-modal-title" class="text-xl font-bold">Special Note</h3><button id="note-modal-close" class="text-gray-500 hover:text-gray-800 text-2xl">&times;</button></div><div id="note-modal-content" class="p-6"></div></div></div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    // ... (All previous JS code remains the same)
+    const escalationModal = document.getElementById('escalation-modal');
+    const escalateBtn = document.getElementById('escalate-btn');
+    const escalationModalCloseBtn = document.getElementById('escalation-modal-close');
+    escalateBtn.addEventListener('click', () => escalationModal.classList.remove('hidden'));
+    escalationModalCloseBtn.addEventListener('click', () => escalationModal.classList.add('hidden'));
+    escalationModal.addEventListener('click', (e) => { if (e.target === escalationModal) escalationModal.classList.add('hidden'); });
+
+    const noteModal = document.getElementById('note-modal');
+    const noteModalTitle = document.getElementById('note-modal-title');
+    const noteModalContent = document.getElementById('note-modal-content');
+    const noteModalCloseBtn = document.getElementById('note-modal-close');
+    const noteItems = document.querySelectorAll('.note-item');
+    noteItems.forEach(item => { item.addEventListener('click', (e) => { e.preventDefault(); noteModalTitle.textContent = e.target.dataset.title; noteModalContent.textContent = e.target.dataset.content; noteModal.classList.remove('hidden'); }); });
+    noteModalCloseBtn.addEventListener('click', () => noteModal.classList.add('hidden'));
+    noteModal.addEventListener('click', (e) => { if (e.target === noteModal) noteModal.classList.add('hidden'); });
+
+    const responseTypeRadios = document.querySelectorAll('input[name="responseType"]');
+    const publicReplyContainer = document.getElementById('public-reply-container');
+    const internalNoteContainer = document.getElementById('internal-note-container');
+    const postBtn = document.getElementById('post-btn');
+    responseTypeRadios.forEach(radio => { radio.addEventListener('change', (e) => { if (e.target.value === 'public') { publicReplyContainer.classList.remove('hidden'); internalNoteContainer.classList.add('hidden'); postBtn.className = 'bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg shadow-sm hover:bg-blue-700 transition'; postBtn.textContent = 'Post Comment'; } else { publicReplyContainer.classList.add('hidden'); internalNoteContainer.classList.remove('hidden'); postBtn.className = 'bg-amber-500 text-white font-semibold py-2 px-4 rounded-lg shadow-sm hover:bg-amber-600 transition'; postBtn.textContent = 'Save Note'; } }); });
+
+    const statusBar = document.getElementById('status-bar');
+    const allStatusItems = statusBar.querySelectorAll('.status-item');
+    const pendingMainLink = document.getElementById('pending-main-link');
+    const statusClasses = { new: { border: 'border-blue-500', text: 'text-blue-600' }, working: { border: 'border-orange-500', text: 'text-orange-600' }, pending: { border: 'border-purple-500', text: 'text-purple-600' }, resolved: { border: 'border-green-500', text: 'text-green-600' }, closed: { border: 'border-gray-500', text: 'text-gray-600' } };
+    function clearAllStatuses() { allStatusItems.forEach(item => { item.classList.remove('active'); const link = item.querySelector('a'); link.classList.remove(...Object.values(statusClasses).flatMap(c => [c.text])); item.classList.remove(...Object.values(statusClasses).flatMap(c => [c.border])); }); }
+    function setActiveStatus(statusItem) { clearAllStatuses(); const status = statusItem.dataset.status; const classes = statusClasses[status]; if (classes) { statusItem.classList.add('active', classes.border); statusItem.querySelector('a').classList.add(classes.text); } }
+    statusBar.addEventListener('click', (e) => { e.preventDefault(); const target = e.target; if (target.classList.contains('pending-sub-item')) { const pendingStatusItem = statusBar.querySelector('[data-status="pending"]'); setActiveStatus(pendingStatusItem); pendingMainLink.textContent = target.dataset.subText; } else { const statusItem = target.closest('.status-item'); if (statusItem) { if (statusItem.dataset.status !== 'pending') { pendingMainLink.textContent = 'Pending'; } setActiveStatus(statusItem); } } });
+    const initialActive = statusBar.querySelector('.status-item.active'); if(initialActive) { const status = initialActive.dataset.status; const classes = statusClasses[status]; if (classes) { initialActive.querySelector('a').classList.add(classes.text); initialActive.classList.add(classes.border); } }
+
+    const wysiwygToolbars = document.querySelectorAll('.wysiwyg-toolbar');
+    wysiwygToolbars.forEach(toolbar => { toolbar.addEventListener('click', e => { const btn = e.target.closest('.wysiwyg-btn'); if (!btn) return; e.preventDefault(); const format = btn.dataset.format; const textarea = toolbar.parentElement.querySelector('textarea'); const start = textarea.selectionStart; const end = textarea.selectionEnd; const selected = textarea.value.substring(start, end); let replacement = selected; switch(format) { case 'bold': replacement = `**${selected}**`; break; case 'italic': replacement = `*${selected}*`; break; case 'link': replacement = `[${selected}](url)`; break; case 'code': replacement = '\n```\n' + (selected || 'your code here') + '\n```\n'; break; } textarea.setRangeText(replacement, start, end, 'end'); textarea.focus(); }); });
+
+    const mainTabsNav = document.getElementById('main-tabs-nav');
+    const mainTabsContent = document.querySelectorAll('.main-tab-content');
+    mainTabsNav.addEventListener('click', (e) => { const tabBtn = e.target.closest('.main-tab-btn'); if (!tabBtn) return; mainTabsNav.querySelectorAll('.main-tab-btn').forEach(btn => { btn.classList.remove('active'); btn.classList.add('border-transparent', 'text-gray-500'); }); mainTabsContent.forEach(content => { content.classList.remove('active'); content.classList.add('hidden'); }); tabBtn.classList.add('active'); tabBtn.classList.remove('border-transparent', 'text-gray-500'); const tabId = tabBtn.dataset.tab; const activeContent = document.getElementById(tabId); if(activeContent) { activeContent.classList.remove('hidden'); activeContent.classList.add('active'); } });
+
+    const priorityContainer = document.getElementById('priority-container');
+    const priorityDisplay = document.getElementById('priority-display');
+    const priorityOptions = document.getElementById('priority-options');
+    const priorityEditBtn = document.getElementById('priority-edit-btn');
+    const priorityClassMap = { Low: 'bg-blue-100 text-blue-800 border-blue-300', Medium: 'bg-green-100 text-green-800 border-green-300', High: 'bg-yellow-100 text-yellow-800 border-yellow-300', Critical: 'bg-red-100 text-red-800 border-red-300' };
+    function showPriorityEditor() { priorityDisplay.classList.add('hidden'); priorityOptions.classList.remove('hidden'); }
+    function hidePriorityEditor() { priorityDisplay.classList.remove('hidden'); priorityOptions.classList.add('hidden'); }
+    priorityEditBtn.addEventListener('click', showPriorityEditor);
+    priorityDisplay.addEventListener('click', showPriorityEditor);
+    priorityOptions.addEventListener('click', (e) => { e.preventDefault(); const choice = e.target.closest('.priority-choice'); if (!choice) return; const newPriority = choice.dataset.priority; priorityDisplay.textContent = newPriority; priorityDisplay.className = `p-3 rounded-lg font-bold text-center border-2 cursor-pointer ${priorityClassMap[newPriority]}`; hidePriorityEditor(); });
+    document.addEventListener('click', (e) => { if (!priorityContainer.contains(e.target) && !priorityOptions.classList.contains('hidden')) { hidePriorityEditor(); } });
+    
+    // Collapsible Section Logic
+    document.querySelectorAll('.collapsible-section h2').forEach(header => {
+        header.addEventListener('click', () => {
+            const content = header.nextElementSibling;
+            const chevron = header.querySelector('.chevron');
+            content.classList.toggle('hidden');
+            chevron.classList.toggle('rotate-180');
+        });
+    });
+
+    const toggleBtn = document.getElementById('toggle-description-btn');
+    const descriptionBody = document.getElementById('description-body');
+    const chevron = document.getElementById('description-chevron');
+    toggleBtn.addEventListener('click', () => {
+        const isHidden = descriptionBody.classList.toggle('hidden');
+        chevron.classList.toggle('rotate-180', !isHidden);
+    });
+    descriptionBody.classList.add('hidden');
+    chevron.classList.remove('rotate-180');
+    
+    const toggleCaseDetailsBtn = document.getElementById('toggle-casedetails-btn');
+    const caseDetailsBody = document.getElementById('casedetails-body');
+    const caseDetailsChevron = document.getElementById('casedetails-chevron');
+    toggleCaseDetailsBtn.addEventListener('click', () => {
+        const isHidden = caseDetailsBody.classList.toggle('hidden');
+        caseDetailsChevron.classList.toggle('rotate-180', !isHidden);
+    });
+});
+</script>
+</body>
+</html>

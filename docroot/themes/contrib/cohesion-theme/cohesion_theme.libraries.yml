@@ -1,8 +1,0 @@
-global-styling:
-  css:
-    theme:
-      css/main.css: {}
-messages:
-  css:
-    component:
-      css/components/messages.css: { weight: -10 }

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The 360° SaaS Support Case View</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Calm & Reassuring -->
+    <!-- Application Structure Plan: The application is designed as an interactive dashboard with a clear narrative flow. It starts with high-level KPIs to establish context. The core is a tab-based interface allowing users to switch between Customer, Agent, and Product Owner perspectives. This structure isolates each persona's concerns for clarity while keeping them connected, preventing overwhelming the user with information. The experience concludes with a concrete "Synthesis" section that presents a unified solution, making the application's insights actionable. This design was chosen for its guided yet flexible exploration, encouraging user engagement and deep understanding of a complex, multi-stakeholder problem. -->
+    <!-- Visualization & Content Choices: 
+        - Customer Priorities -> Goal: Compare -> Viz: Radar Chart (Chart.js) -> Interaction: Hover tooltips. -> Justification: Effectively shows the balance of competing priorities (speed, clarity, etc.) in a single, digestible graphic.
+        - Agent Info Needs -> Goal: Compare -> Viz: Horizontal Bar Chart (Chart.js) -> Interaction: Hover tooltips. -> Justification: Best for ranking the relative importance of discrete information types for quick agent assessment.
+        - Agent Workflow -> Goal: Organize -> Viz: HTML/CSS Flow Diagram -> Interaction: None. -> Justification: Clearly visualizes a linear process without relying on prohibited SVG/Mermaid.
+        - PO Case Analysis -> Goal: Relationships -> Viz: Bubble Chart (Chart.js) -> Interaction: Hover tooltips. -> Justification: Ideal for showing the three-dimensional relationship between case volume, business impact, and issue type for prioritization.
+        - PO Trend Analysis -> Goal: Change -> Viz: Stacked Bar Chart (Chart.js) -> Interaction: Filter buttons to update chart data. -> Justification: Shows changes in the composition of case types over time. The interactive filter allows for deeper, user-driven data exploration.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F5F5F5;
+            color: #333333;
+        }
+    </style>
+</head>
+<body class="antialiased">
+    
+    <section id="synthesis" class="py-12">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-10">
+                <h2 class="text-3xl font-bold text-gray-800">Synthesis: The Ideal Case Structure</h2>
+                <p class="text-lg text-gray-600 mt-3 max-w-3xl mx-auto">A successful support system begins at submission. The ideal case creation UI is simple for customers, yet captures the structured data needed by agents and product owners. It balances ease-of-use with depth of information.</p>
+            </div>
+             <div class="max-w-4xl mx-auto bg-white rounded-lg shadow-xl p-8 border border-gray-200">
+                <h3 class="text-2xl font-bold mb-2">Submit a Support Request</h3>
+                <p class="text-gray-600 mb-6">Provide the details below to help our team resolve your issue quickly.</p>
+
+                <div class="space-y-6">
+                    <div>
+                        <label for="subject" class="block text-sm font-medium text-gray-700">1. Subject</label>
+                        <input type="text" id="subject" placeholder="Short, descriptive summary of the issue" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
+                    </div>
+                    
+					<div>
+						<label for="environment" class="block text-sm font-medium text-gray-700">2. Environment/Instance</label>
+						<select id="environment" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
+							<option>Select an environment...</option>
+							<option>My Environment 1</option>
+							<option>My Environment 2</option>
+							<option>My Instance 1</option>
+							<option>My Instance 2</option>
+						</select>
+					</div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+						<div>
+							<label for="product" class="block text-sm font-medium text-gray-700">3. Affected Product or Service</label>
+							<select id="product" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
+								<option>Select a product...</option>
+								<option>CDP</option>
+								<option>Cloud Platform</option>
+								<option>Code Studio</option>
+								<option>Content Optimization (SEO)</option>
+								<option>Conversion Optimization</option>
+								<option>DAM</option>
+								<option>Edge</option>
+								<option>Front-end Hosting</option>
+								<option>Launchpad</option>
+								<option>MEO</option>
+								<option>Search</option>
+								<option>Site Factory</option>
+								<option>Source</option>
+								<option>Web Governance</option>
+							</select>
+						</div>
+                        <div>
+                            <label for="impact" class="block text-sm font-medium text-gray-700">4. Business Impact</label>
+                            <select id="impact" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
+                                <option>Select impact level...</option>
+                                <option>Low - General guidance required</option>
+                                <option>Medium - Minor functionality impaired</option>
+                                <option>High - Key functionality impaired</option>
+                                <option>Critical - Production system down</option>
+                            </select>
+                        </div>
+                    </div>
+                     <div>
+                        <label for="description" class="block text-sm font-medium text-gray-700">5. Detailed Description (Steps to Reproduce)</label>
+                        <div class="mt-2 mb-3 text-sm text-gray-600 bg-gray-50 p-4 rounded-md border">
+                            <p class="mb-2">Please provide a detailed explanation of what you are experiencing. Where appropriate, please include the following information:</p>
+                            <ul class="list-disc list-inside space-y-1">
+                                <li>Reproducible step-by-step actions taken so far</li>
+                                <li>Description of the impact to your business </li>
+                                <li>Errors and Command Output</li>
+                                <li>Impacted URLs</li>
+                            </ul>
+                        </div>
+                        <textarea id="description" rows="6" placeholder="Please describe the steps you took, what you expected, and what happened instead. Include any error messages or page urls." class="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"></textarea>
+                    </div>
+
+                     <div>
+                        <label class="block text-sm font-medium text-gray-700">6. Attachments (Logs, Screenshots)</label>
+                        <div class="mt-2 flex justify-center rounded-md border-2 border-dashed border-gray-300 px-6 pt-5 pb-6">
+                            <div class="text-center">
+                                <div class="text-4xl">📎</div>
+                                <p class="mt-2 text-sm text-gray-600">Drag & drop files or <button type="button" class="font-medium text-blue-600 hover:text-blue-500">browse</button></p>
+                                <p class="text-xs text-gray-500">PNG, JPG, ZIP, LOG up to 10MB</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-end pt-4">
+                        <button type="button" class="inline-flex items-center rounded-md border border-transparent bg-blue-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">Submit Case</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+		<footer class="text-center mt-8 mb-12">
+    		<p class="text-gray-500">Aligning perspectives is the foundation of world-class support and product excellence.</p>
+    	</footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    // Chart rendering scripts and other interactive elements would be here.
+    // This script block is kept for potential future interactivity.
+});
+</script>
+</body>
+</html>

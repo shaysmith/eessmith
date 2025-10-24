@@ -1,5 +1,0 @@
-services:
-  cohesion_templates.commands:
-    class: \Drupal\cohesion_templates\Commands\SitestudioTemplatesRegenerate
-    tags:
-      - { name: drush.command }

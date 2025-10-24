@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Support Request Form</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F5F5F5;
+            color: #333333;
+        }
+    </style>
+</head>
+<body class="antialiased">
+    
+    <section id="event-form-section" class="py-12">
+        <div class="container mx-auto px-4">
+             <div class="max-w-4xl mx-auto bg-white rounded-lg shadow-xl p-8 border border-gray-200">
+                <h3 class="text-2xl font-bold mb-2">Submit an Event Support Request</h3>
+                <p class="text-gray-600 mb-6">Please provide the following details to help us prepare for your event.</p>
+
+                <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-6 rounded-r-lg">
+                    <div class="flex">
+                        <div class="flex-shrink-0">
+                            <svg class="h-5 w-5 text-yellow-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.21 3.03-1.742 3.03H4.42c-1.532 0-2.492-1.696-1.742-3.03l5.58-9.92zM10 13a1 1 0 110-2 1 1 0 010 2zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                        <div class="ml-3">
+                            <p class="text-sm text-yellow-700">
+                                In order for Acquia to properly prepare for your traffic event, we require answers to the following questions. If you do not have all the information required at this time, please proceed with submitting a ticket and provide an update as soon as it is available. Please note, our ability to prepare for your event in full can be limited by how far in advance we receive all of the necessary information.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="space-y-6">
+                    <div>
+                        <label for="environment" class="block text-sm font-medium text-gray-700">1. Environment/Instance</label>
+						<select id="environment" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
+							<option>Select an environment...</option>
+							<option>My Environment 1</option>
+							<option>My Environment 2</option>
+							<option>My Instance 1</option>
+							<option>My Instance 2</option>
+						</select>
+                    </div>
+
+                    <div>
+                        <label for="description" class="block text-sm font-medium text-gray-700">2. Description</label>
+                        <textarea id="description" rows="4" placeholder="Provide a general description of the event (e.g., marketing campaign, product launch, press release)." class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"></textarea>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="event-start-date" class="block text-sm font-medium text-gray-700">3. Event start (UTC)</label>
+                            <div class="flex gap-2 mt-1">
+                                <input type="date" id="event-start-date" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
+                                <input type="time" id="event-start-time" class="block w-1/2 rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
+                            </div>
+                        </div>
+                         <div>
+                            <label for="event-end-date" class="block text-sm font-medium text-gray-700">4. Event end (UTC)</label>
+                            <div class="flex gap-2 mt-1">
+                                <input type="date" id="event-end-date" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
+                                <input type="time" id="event-end-time" class="block w-1/2 rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="traffic-rate" class="block text-sm font-medium text-gray-700">5. Expected rate of daily traffic</label>
+                        <textarea id="traffic-rate" rows="3" placeholder="i.e. Will traffic have an immediate spike in traffic upon the start of the event? Will traffic grow gradually throughout the event? Will there be spikes in traffic throughout the event?" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"></textarea>
+                    </div>
+
+                    <div>
+                        <label for="traffic-increase" class="block text-sm font-medium text-gray-700">6. Expected percent of traffic increase</label>
+                        <textarea id="traffic-increase" rows="2" placeholder="What is the percentage increase of traffic expected during this event?" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"></textarea>
+                    </div>
+
+                    <div>
+                        <label for="traffic-type" class="block text-sm font-medium text-gray-700">7. Expected traffic type</label>
+                        <textarea id="traffic-type" rows="2" placeholder="Will traffic be primarily either authenticated user traffic or anonymous traffic?" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"></textarea>
+                    </div>
+
+                    <div>
+                        <label for="traffic-focus" class="block text-sm font-medium text-gray-700">8. Expected focus of increased traffic</label>
+                        <textarea id="traffic-focus" rows="3" placeholder="Will the entire website see increased traffic, or only specific URLs? Please list URLs?" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"></textarea>
+                    </div>
+
+                    <div>
+                        <label for="previous-event" class="block text-sm font-medium text-gray-700">9. Has this application experienced any previous traffic events similar to this planned traffic event?</label>
+                        <select id="previous-event" class="mt-1 block w-full md:w-1/2 rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
+                            <option>Select an answer...</option>
+                            <option value="yes">Yes</option>
+                            <option value="no">No</option>
+                        </select>
+                    </div>
+
+                    <div class="flex justify-end pt-4">
+                        <button type="button" class="inline-flex items-center rounded-md border border-transparent bg-blue-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">Submit Event Request</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="text-center mt-8 mb-12">
+        <p class="text-gray-500">Clear communication is the foundation of a successful event.</p>
+    </footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const textareas = document.querySelectorAll('textarea[placeholder]');
+    
+    textareas.forEach(textarea => {
+        const placeholder = textarea.getAttribute('placeholder');
+        
+        textarea.addEventListener('focus', () => {
+            if (textarea.value === '') {
+                textarea.setAttribute('placeholder', '');
+            }
+        });
+        
+        textarea.addEventListener('blur', () => {
+            if (textarea.value === '') {
+                textarea.setAttribute('placeholder', placeholder);
+            }
+        });
+    });
+});
+</script>
+</body>
+</html>
+

@@ -1,3 +1,0 @@
-cohesion_templates.cohesion_view_templates.*:
-  type: cohesion_template
-  label: 'View templates configuration'
